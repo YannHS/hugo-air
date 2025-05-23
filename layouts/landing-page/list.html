@@ -11,10 +11,11 @@
                 {{ $landingPages = $landingPages | append . }}
             {{ end }}
         {{ else if eq .Kind "section" }}
-            {{ $indexPage := index .Pages "index" }}
-            {{ if $indexPage }}
-                {{ if .Params.islanding }}
-                    {{ $landingPages = $landingPages | append $indexPage }}
+            {{ range .Pages }}
+                {{ if eq .File.BaseFileName "index" }}
+                    {{ if .Params.islanding }}
+                        {{ $landingPages = $landingPages | append . }}
+                    {{ end }}
                 {{ end }}
             {{ end }}
         {{ end }}
@@ -29,8 +30,8 @@
 
             <div class="container">
 
-                <h1>{{ .Title }}</h1>
-                <p>{{ .Content }}</p>
+                <h1>{{ $page.Title }}</h1>
+                <p>{{ $page.Content }}</p>
             </div>
         </section>
     {{ end }}
